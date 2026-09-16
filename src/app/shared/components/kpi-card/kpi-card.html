@@ -1,0 +1,8 @@
+<div class="kpi-card" [class]="'accent-' + accent">
+  <div class="kpi-icon">{{ icon }}</div>
+  <div class="kpi-body">
+    <p class="kpi-label">{{ label }}</p>
+    <p class="kpi-value">{{ value }}</p>
+    <a *ngIf="link" [routerLink]="link" class="kpi-link">{{ linkLabel }} &rarr;</a>
+  </div>
+</div>

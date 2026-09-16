@@ -1,0 +1,44 @@
+<div class="claims-queue">
+  <h1>Claims Queue</h1>
+
+  <app-loading-spinner *ngIf="loading()"></app-loading-spinner>
+  <app-empty-state *ngIf="!loading() && claims().length === 0" icon="✅" title="No claims to review"></app-empty-state>
+
+  <table class="queue-table" *ngIf="!loading() && claims().length">
+    <thead>
+      <tr><th>Claim #</th><th>Policy #</th><th>Incident date</th><th>Status</th><th>Decision</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let claim of claims()">
+        <td>{{ claim.claimNumber }}</td>
+        <td>{{ claim.policyNumber }}</td>
+        <td>{{ claim.incidentDate }}</td>
+        <td><app-status-badge [status]="claim.status"></app-status-badge></td>
+        <td class="actions">
+          <button
+            class="start-review"
+            *ngIf="claim.status === 'SUBMITTED'"
+            [disabled]="!canStartReview(claim)"
+            (click)="startReview(claim)"
+          >
+            Start Review
+          </button>
+          <button
+            class="approve"
+            [disabled]="!canApprove(claim)"
+            (click)="approve(claim)"
+          >
+            Approve
+          </button>
+          <button
+            class="reject"
+            [disabled]="!canReject(claim)"
+            (click)="reject(claim)"
+          >
+            Reject
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
